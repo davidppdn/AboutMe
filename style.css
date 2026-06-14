@@ -1,15 +1,91 @@
-.splash {
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+:root {
+  --num-cycles: 3;
+  --dot-cycle-duration: 2s;
+  --total-dot-duration: calc(
+    var(--num-cycles) * var(--dot-cycle-duration)
+  );
+}
+
+/** Splash Screen */
+
+.splash-screen {
   position: fixed;
   inset: 0;
-  background: black;
-  color: white;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: fadeOut 2s forwards;
+  background: #2b2930;
+  color: white;
+  animation: splash-fade 1s ease-out var(--total-dot-duration) forwards;
 }
 
-@keyframes fadeOut {
-  0% { opacity: 1; }
-  100% { opacity: 0; visibility: hidden; }
+@keyframes splash-fade {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/** Loading dots*/
+
+.dot {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 0.5rem;
+  opacity: 0;
+  background-color: currentColor;
+  animation-duration: var(--dot-cycle-duration);
+  animation-iteration-count: var(--num-cycles);
+}
+
+.dot:nth-of-type(1) {
+  animation-name: first-dot;
+}
+
+.dot:nth-of-type(2) {
+  animation-name: second-dot;
+}
+
+.dot:nth-of-type(3) {
+  animation-name: third-dot;
+}
+
+@keyframes first-dot { 
+  0%, 74.99% { opacity: 1; } 
+  75%, 100% { opacity: 0; } 
+} 
+
+@keyframes second-dot {
+  0%, 24.99% { opacity: 0; } 
+  25%, 74.99% { opacity: 1; } 
+  75%, 100% { opacity: 0; } 
+} 
+
+@keyframes third-dot { 
+  0%, 49.99% { opacity: 0; } 
+  50%, 74.99% { opacity: 1; } 
+  75%, 100% { opacity: 0; } 
+}
+
+/** Main content */
+
+.content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
 }
