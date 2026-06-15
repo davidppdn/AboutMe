@@ -5,11 +5,16 @@ body {
 }
 
 :root {
-  --num-cycles: 3;
+  /** Colors */
+  --grey-600: #46464C;
+  --grey-700: #343438;
+  --grey-800: #1b1b1d;
+
+  --loading-bar-gradient: linear-gradient(to right, black, white);
+
+  --num-cycles: 0;
   --dot-cycle-duration: 2s;
-  --total-dot-duration: calc(
-    var(--num-cycles) * var(--dot-cycle-duration)
-  );
+  --total-dot-duration: calc(var(--num-cycles) * var(--dot-cycle-duration));
 }
 
 /** Splash Screen */
@@ -35,6 +40,21 @@ body {
     opacity: 0;
     visibility: hidden;
   }
+}
+
+.splash-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 30vw;
+  height: 30vh;
+  min-width: 200px;
+  min-height: 150px;
+  background: var(--grey-700);
+  border-radius: 20px;
+  border: 2px solid var(--grey-600);
+  box-shadow: 0 12px 16px -8px var(--grey-800);
 }
 
 /** Loading dots*/
@@ -79,7 +99,66 @@ body {
   75%, 100% { opacity: 0; } 
 }
 
-/** Main content */
+/** Loading Bar */
+.loading-bar {
+  position: relative;
+  width: 80%;
+  height: 20px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--grey-600);
+  border-radius: 10px;
+}
+
+.loading-bar::before {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  background: var(--loading-bar-gradient);
+  border-radius: 9px;
+}
+
+.loading-bar-cover {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  bottom: 1px;
+  width: calc(100% - 2px);
+  background: var(--grey-600);
+  animation: loading-progress var(--total-dot-duration) linear forwards;
+}
+
+@keyframes loading-progress {
+  0% {
+    width: calc(100% - 2px);
+  }
+
+  12% {
+    width: 92%;
+  }
+
+  25% {
+    width: 79%;
+  }
+
+  48% {
+    width: 54%;
+  }
+
+  60% {
+    width: 48%;
+  }
+
+  82% {
+    width: 24%;
+  }
+
+  100% {
+    width: 0;
+  }
+}
+
+/** Main Content */
 
 .content {
   display: flex;
@@ -88,4 +167,14 @@ body {
   height: 100vh;
   align-items: center;
   justify-content: center;
+  background-color: var(--grey-700);
+}
+
+.main-content-container {
+  width: min(800px, 100%);
+  height: 100vh;
+  background-color: var(--grey-600);
+  box-shadow:
+    -12px 0 16px -12px var(--grey-800),
+    12px 0 16px -12px var(--grey-800);
 }
